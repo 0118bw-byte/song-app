@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歌單</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <h1>🎧 歌單</h1>
+
+    <div id="songList" class="song-list"></div>
+
+    <button id="randomBtn" class="random-btn">🎲 隨機抽一首</button>
+
+    <div id="resultBox" class="result hidden">
+        <h2>🎶 抽到的歌曲：</h2>
+        <p id="resultName"></p >
+        <p id="resultSinger"></p >
+        <button id="closeResult">關閉</button>
+    </div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
+body {
+    font-family: "Noto Sans TC", sans-serif;
+    background: #fafafa;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.song-list {
+    max-width: 400px;
+    margin: auto;
+    text-align: left;
+}
+
+.song-item {
+    padding: 12px;
+    background: white;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.song-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.song-singer {
+    color: #777;
+}
+
+.random-btn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    background: #00aaff;
+    color: white;
+    cursor: pointer;
+}
+
+.result {
+    margin-top: 25px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hidden {
+    display: none;
+}
+// 你的歌單（你可以自行加）
+const songs = [
+    { name: "逆光", singer: "林宥嘉" },
+    { name: "句號", singer: "鄧紫棋" },
+    { name: "光年之外", singer: "鄧紫棋" },
+    { name: "赤伶", singer: "HITA" },
+    { name: "River", singer: "Bishop Briggs" }
+];
+
+const listEl = document.getElementById("songList");
+
+// 渲染歌單
+listEl.innerHTML = songs.map(s => `
+    <div class="song-item">
+        <div class="song-title">${s.name}</div>
+        <div class="song-singer">${s.singer}</div>
+    </div>
+`).join("");
+
+// 隨機抽歌
+document.getElementById("randomBtn").addEventListener("click", () => {
+    const s = songs[Math.floor(Math.random() * songs.length)];
+
+    document.getElementById("resultName").innerText = s.name;
+    document.getElementById("resultSinger").innerText = s.singer;
+
+    document.getElementById("resultBox").classList.remove("hidden");
+});
+
+// 關閉結果
+document.getElementById("closeResult").addEventListener("click", () => {
+    document.getElementById("resultBox").classList.add("hidden");
+});        
+    
